@@ -77,8 +77,10 @@ cidr: 192.168.0.0/16 with 10.10.0.0./16
 kubectl create -f custom-resources.yaml
 ```
 ### join `worker` to cluster
+```
 kubeadm token list
 kubeadm token create --print-join-command --ttl 10h
+```
 ### change `label` Kubernetes node
 ```
 kubectl label node worker1 kubernetes.io/role=worker1
