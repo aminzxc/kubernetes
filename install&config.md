@@ -1,11 +1,11 @@
 ### install `CRE`
 ```
-https://github.com/containerd/containerd/releases/download/v2.1.0/containerd-2.1.0-linux-amd64.tar.gz
-tar Czxvf /usr/local containerd-1.6.2-linux-amd64.tar.gz
+wget https://github.com/containerd/containerd/releases/download/v2.1.0/containerd-2.1.0-linux-amd64.tar.gz
+tar Czxvf /usr/local containerd-2.1.0-linux-amd64.tar.gz
 ```
 ### install `service` containerd
 ```
-https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 sudo mv containerd.service /usr/lib/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
@@ -13,7 +13,7 @@ sudo systemctl status containerd
 ```
 ### install `runc`
 ```
-https://github.com/opencontainers/runc/releases/download/v1.3.0/runc.amd64
+wget https://github.com/opencontainers/runc/releases/download/v1.3.0/runc.amd64
 install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
 ### install `CNI` plugin
@@ -23,9 +23,11 @@ wget https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni
 tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.7.1.tgz
 ```
 ### config `containerd`
+```
 sudo mkdir -p /etc/containerd/
 containerd config default | sudo tee /etc/containerd/config.toml
 sudo systemctl restart containerd
+```
 ### To use the systemd cgroup driver in /etc/containerd/config.toml with runc, set
 ```
 [plugins.'io.containerd.cri.v1.runtime'.containerd.runtimes.runc]
@@ -49,6 +51,12 @@ net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward = 1
 EOF
 ```
+### swap off
+```
+vim /etc/fstab
+comment line
+#/swapfile none swap sw 0 0
+```
 ### install `kubernetes`
 ```
 https://kubernetes.io/releases/
@@ -60,6 +68,7 @@ sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 apt list -a kubeadm
+apt update
 apt install kubelet=1.30.12-1.1 kubeadm=1.30.12-1.1 kubectl=1.30.12-1.1 -y
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
