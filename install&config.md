@@ -82,7 +82,7 @@ https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/tigera-operator.yaml
 CHANGE cidr with cidr Kubernetes
 wget https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/custom-resources.yaml
-cidr: 192.168.0.0/16 with 10.10.0.0./16
+cidr: 192.168.0.0/16 with 10.10.0.0/16
 kubectl create -f custom-resources.yaml
 ```
 ### join `worker` to cluster
