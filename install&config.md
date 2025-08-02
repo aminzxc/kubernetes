@@ -82,8 +82,19 @@ https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/tigera-operator.yaml
 CHANGE cidr with cidr Kubernetes
 wget https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/custom-resources.yaml
-cidr: 192.168.0.0/16 with 10.10.0.0/16
+  calicoNetwork:
+    nodeAddressAutodetectionV4:
+      interface: "ens33"
+    ipPools:
+    - name: default-ipv4-ippool
+      blockSize: 26
+      cidr: 10.10.0.0/16
+      encapsulation: VXLANCrossSubnet
+      natOutgoing: Enabled
+      nodeSelector: all()
+
 kubectl create -f custom-resources.yaml
+kubectl get po -A -o wide
 ```
 ### join `worker` to cluster
 ```
