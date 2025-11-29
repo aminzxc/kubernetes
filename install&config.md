@@ -132,6 +132,14 @@ git clone https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner#
 # cd directory deploy
 kubectl apply -f rbac.yaml
 #config deployment.yaml for nfs server
+          env:
+            - name: PROVISIONER_NAME
+              value: k8s-sigs.io/nfs-subdir-external-provisioner
+            - name: NFS_SERVER
+              value: IP NFS SERVER
+            - name: NFS_PATH
+              value: /mnt/nfs -> DIRECTORY SHARE NFS
+
 kubectl apply -f deployment.yaml
 kubectl apply -f class.yaml
 kubectl get pv & pvc
