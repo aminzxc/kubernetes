@@ -114,3 +114,25 @@ tar Cxzvvf /usr/local nerdctl-full-2.1.2-linux-amd64.tar.gz
 for use  namespace containerd k8s.io
 nerdctl -n k8s.io ps
 ```
+### install & config nfs storage
+```
+apt install nfs-kernel-server
+mkdir /mnt/nfs
+chown nobody:nogroup /mnt/nfs
+/mnt/nfs        *(rw,sync,no_subtree_check,insecure,no_all_squash,no_root_squash)
+exportfs -rav
+```
+```
+install agent all worker node
+apt install nfs-common
+```
+```
+#install driver nfs on cluster master node
+git clone https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner#
+# cd directory deploy
+kubectl apply -f rbac.yaml
+#config deployment.yaml for nfs server
+kubectl apply -f deployment.yaml
+kubectl apply -f class.yaml
+kubectl get pv & pvc
+```
