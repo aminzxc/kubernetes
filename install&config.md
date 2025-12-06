@@ -72,6 +72,7 @@ apt list -a kubeadm
 apt update
 apt install kubelet=1.30.12-1.1 kubeadm=1.30.12-1.1 kubectl=1.30.12-1.1 -y
 sudo apt-mark hold kubelet kubeadm kubectl
+dpkg --get-selections | egrep 'kubelet|kubeadm|kubectl'
 ```
 ### init cluster on node `master`
 ```
